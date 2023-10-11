@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Home</title>
 </head>
 <body>
 
@@ -25,10 +25,11 @@
     </div>
 
     <div style="border: 3px solid black;">
-        <h2>Your Blog Posts</h2>
+        <h2>Blog Posts</h2>
         @foreach ($posts as $post)
         <div style="background_color: grey border: 10px margin: 10px">
             <h3>{{$post['title']}}</h3>
+            <h5>Writer: {{ $post->id }}</h5>
             <p>{{$post['body']}}</p>
             <p><a href="/edit-post/{{$post->id}}">Edit</a></p>
             <form action="/delete-post/{{$post->id}}" method="POST">
@@ -63,7 +64,7 @@
             <button>Sign In</button>
         </form>
     </div>
-    
+        {{-- @include('login') --}}
     @endauth
 
 
