@@ -29,13 +29,24 @@
         @foreach ($posts as $post)
         <div style="background_color: grey border: 10px margin: 10px">
             <h3>{{$post['title']}}</h3>
-            <h5>Writer: {{ $post->id }}</h5>
+            <h5>Writer: {{ $post->user->name }}</h5>
             <p>{{$post['body']}}</p>
+            <h5>Comments</h5>
+            @foreach($post->comments as $comment)
+                <p> <strong>{{$comment->commenter['name']}}</strong>: {{$comment->comment}}</p>
+            @endforeach
             <p><a href="/edit-post/{{$post->id}}">Edit</a></p>
             <form action="/delete-post/{{$post->id}}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button>Delete</button>
+            </form>
+
+            <form action="/comments" method="POST">
+                @csrf
+                <input type="hidden" name="post_id" value="{{$post->id}}">
+                <textarea name="comment" placeholder="comment"></textarea>
+                <button>Comment</button>
             </form>
         </div>
 
