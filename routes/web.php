@@ -4,6 +4,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 use PHPUnit\Framework\Attributes\PostCondition;
 
 /*
@@ -32,8 +33,13 @@ Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/login', [UserController::class, 'login']);
 
 // Route for the Posts
-Route::post('/create-post', [PostController::class, 'createPost']);
-Route::get('/edit-post/{post}', [PostController::class, 'showEditScreen']);
-Route::post('/edit-post/{post}', [PostController::class, 'updatePost']);
-Route::delete('/delete-post/{post}', [PostController::class, 'deletePost']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::post('/comments', [CommentController::class, 'store']);
+Route::middleware(['auth'])->group(function () {
+    // Comment routes
+    Route::post('/create-post', [PostController::class, 'createPost']);
+    Route::get('/edit-post/{post}', [PostController::class, 'showEditScreen']);
+    Route::post('/edit-post/{post}', [PostController::class, 'updatePost']);
+    Route::delete('/delete-post/{post}', [PostController::class, 'deletePost']);
+    Route::post('/comments', [CommentController::class, 'store']);
+});
